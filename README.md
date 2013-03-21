@@ -1,4 +1,4 @@
-# Heroku::Request::Id
+# HerokuRequestId
 
 TODO: Write a gem description
 
