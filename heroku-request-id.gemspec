@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'heroku/request/id/version'
+require 'heroku-request-id/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "heroku-request-id"
-  spec.version       = Heroku::Request::Id::VERSION
+  spec.version       = HerokuRequestId::VERSION
   spec.authors       = ["Jeremy Green"]
   spec.email         = ["jeremy@octolabs.com"]
   spec.description   = %q{Simple Rack middleware to log the heroku request id and write it to the end of html requests. Both optionally, of course.}
