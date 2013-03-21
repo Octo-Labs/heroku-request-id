@@ -38,7 +38,6 @@ module HerokuRequestId
     end
 
     def each(&block)
-      puts "html_comment = #{self.class.html_comment}"
       if self.class.html_comment && @headers["Content-Type"].include?("text/html")
         block.call("<!-- Heroku request id : #{@request_id} - Elapsed time : #{@elapsed} -->\n")
       end
