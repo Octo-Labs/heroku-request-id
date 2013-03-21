@@ -1,6 +1,6 @@
 # HerokuRequestId
 
-TODO: Write a gem description
+Simple Rack middleware to log the heroku request id and write it to the end of html requests. Both optionally, of course.
 
 ## Installation
 
