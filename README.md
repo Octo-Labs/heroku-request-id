@@ -18,7 +18,21 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+By default the gem will print a log line to the Heroku logs
+containing the request id and the elapsed time taken processing the
+request.  You can disable the log line by putting this in an
+initializer.
+
+```ruby
+  HerokuRequestId::Middleware.log_line = false
+```
+
+You can configure the gem to add a comment to the beginning of html
+requests by adding this to an initializer.
+
+```ruby
+  HerokuRequestId::Middleware.html_comment = true
+```
 
 ## Contributing
 
