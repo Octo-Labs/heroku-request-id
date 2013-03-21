@@ -33,15 +33,15 @@ module HerokuRequestId
     end
 
     def each(&block)
-      @response.each(&block)
       @stop = Time.now
       @elapsed = @stop - @start
-      if self.class.html_comment && @headers["Content-Type"].include?("text/html")
+      if self.class.html_comment && @headers["Content-Type"] && @headers["Content-Type"].include?("text/html")
         block.call("<!-- Heroku request id : #{@request_id} - Elapsed time : #{@elapsed} -->\n")
       end
       if self.class.log_line
         $stdout.puts("heroku-request-id=#{@request_id} measure=\"rack-request\" elapsed=#{@elapsed}")
       end
+      @response.each(&block)
     end
 
   end
