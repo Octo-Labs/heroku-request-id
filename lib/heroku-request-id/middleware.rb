@@ -3,10 +3,9 @@ module HerokuRequestId
 
     def initialize(app)
         @app = app
-        html_comment = true
     end
 
-    @@html_comment = true
+    @@html_comment = false
 
     def self.html_comment
       @@html_comment
@@ -16,7 +15,7 @@ module HerokuRequestId
       @@html_comment = hc
     end
 
-    @@log_line = false
+    @@log_line = true
 
     def self.log_line
       @@log_line
