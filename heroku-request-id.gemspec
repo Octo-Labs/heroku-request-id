@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Heroku::Request::Id::VERSION
   spec.authors       = ["Jeremy Green"]
   spec.email         = ["jeremy@octolabs.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Simple Rack middleware to log the heroku request id and write it to the end of html requests. Both optionally, of course.}
+  spec.summary       = %q{Simple Rack middleware to log the heroku request id and write it to the end of html requests. Both optionally, of course.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rack-test"
 end
