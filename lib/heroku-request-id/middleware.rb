@@ -29,19 +29,19 @@ module HerokuRequestId
       @start = Time.now
       @request_id = env['HTTP_HEROKU_REQUEST_ID']
       @status, @headers, @response = @app.call(env)
-      @stop = Time.now
-      @elapsed = @stop - @start
-      if self.class.log_line
-        $stdout.puts("heroku-request-id=#{env['HTTP_HEROKU_REQUEST_ID']} measure=\"rack-request\" elapsed=#{@elapsed}")
-      end
       [@status, @headers, self]
     end
 
     def each(&block)
+      @response.each(&block)
+      @stop = Time.now
+      @elapsed = @stop - @start
       if self.class.html_comment && @headers["Content-Type"].include?("text/html")
         block.call("<!-- Heroku request id : #{@request_id} - Elapsed time : #{@elapsed} -->\n")
       end
-      @response.each(&block)
+      if self.class.log_line
+        $stdout.puts("heroku-request-id=#{@request_id} measure=\"rack-request\" elapsed=#{@elapsed}")
+      end
     end
 
   end
