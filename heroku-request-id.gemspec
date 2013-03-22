@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["jeremy@octolabs.com"]
   spec.description   = %q{Simple Rack middleware to log the heroku request id and write it to the end of html requests. Both optionally, of course.}
   spec.summary       = %q{Simple Rack middleware to log the heroku request id and write it to the end of html requests. Both optionally, of course.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/Octo-Labs/heroku-request-id"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
