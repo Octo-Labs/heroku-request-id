@@ -47,4 +47,31 @@ describe HerokuRequestId::Middleware do
     last_response.should be_ok
   end
 
+
+ # my silly but effective way to test if the header gets replicated/passed forward.
+ # i searched and couldn't figure out the typical way of testing
+ # if a header is passed down the stack, perhaps someone who knows can replace this.
+  describe "header replication into x-request-id" do
+    let(:inner_app) do
+      lambda { |env|
+        [200, {'Content-Type' => 'text/html'}, [env["HTTP_X_REQUEST_ID"]]]
+      }
+    end
+    let(:app){ HerokuRequestId::Middleware.new(inner_app) }
+    context "by default" do
+      it "does not replicate the heroku header into rails header" do
+        subject
+        last_response.body.should eq ""
+      end
+    end
+    context "when x_request_id_replication == true" do
+      before{HerokuRequestId::Middleware.x_request_id_replication = true}
+      after{HerokuRequestId::Middleware.x_request_id_replication = false}
+      it "replicates the heroku header into rails header" do
+        subject
+        last_response.body.should eq "the_id_string"
+      end
+    end
+  end
+
 end
