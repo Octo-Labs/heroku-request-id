@@ -2,7 +2,7 @@ module HerokuRequestId
   class Middleware
 
     def initialize(app)
-        @app = app
+      @app = app
     end
 
     @@html_comment = false
@@ -11,8 +11,8 @@ module HerokuRequestId
       @@html_comment
     end
 
-    def self.html_comment= hc
-      @@html_comment = hc
+    def self.html_comment= value
+      @@html_comment = value
     end
 
     @@log_line = true
@@ -21,8 +21,8 @@ module HerokuRequestId
       @@log_line
     end
 
-    def self.log_line= hc
-      @@log_line = hc
+    def self.log_line= value
+      @@log_line = value
     end
 
     def call(env)
