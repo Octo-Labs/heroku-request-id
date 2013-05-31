@@ -34,6 +34,14 @@ requests by adding this to an initializer.
   HerokuRequestId::Middleware.html_comment = true
 ```
 
+You can also configure the gem to copy the `HTTP_HEROKU_REQUEST_ID`
+header, which is set by heroku, into the `HTTP_X_REQUEST_ID` header,
+which is used by `ActionDispatch:: RequestId`.
+
+```ruby
+  HerokuRequestId::Middleware.x_request_id_replication = true
+```
+
 ## Contributing
 
 1. Fork it
