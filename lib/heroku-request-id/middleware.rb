@@ -55,7 +55,7 @@ module HerokuRequestId
     end
     
     def build_msg
-      elapsed = @env['X-Runtime']
+      elapsed = @headers['X-Runtime']
       msg = %[Heroku request id : #{@request_id}]
       if elapsed && elapsed.strip != ""
         msg += %[ - Elapsed time (from Rack::Runtime) : #{elapsed}]

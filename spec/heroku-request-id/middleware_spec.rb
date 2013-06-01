@@ -8,35 +8,39 @@ describe HerokuRequestId::Middleware do
     lambda { |env| [200, {'Content-Type' => 'text/html'}, ['<body>All good!</body>']] }
   end
 
+  let(:inner_app_with_rack_runtime) do
+    lambda { |env| [200, {'Content-Type' => 'text/html','X-Runtime' => '42'}, ['<body>All good!</body>']] }
+  end
+
   let(:app) { HerokuRequestId::Middleware.new(inner_app) }
 
-  let(:request_without_rack_runtime)do
+  let(:request)do
     capture_stdout{ get("/", {}, {"HTTP_HEROKU_REQUEST_ID" => "the_id_string"}) }
   end
 
-  let(:request_with_rack_runtime)do
-    capture_stdout{ get("/", {}, {"HTTP_HEROKU_REQUEST_ID" => "the_id_string","X-Runtime" => "42"}) }
-  end
-
   it "prints the request id to stdout by default" do
-    output = request_without_rack_runtime
+    output = request
     output.should match("Heroku request id")
     output.should match("the_id_string")
   end
 
   it "Does not include runtime information if the 'X-Runtime' header is not present" do
-    output = request_without_rack_runtime
+    output = request
     output.should match("Runtime info not available")
   end
 
-  it "Does include runtime information if the 'X-Runtime' header is present" do
-    output = request_with_rack_runtime
-    output.should match("Elapsed time")
+  describe "with Rack::Runtime" do
+    let(:app) { HerokuRequestId::Middleware.new(inner_app_with_rack_runtime) }
+    it "Does include runtime information if the 'X-Runtime' header is present" do
+      output = request
+      output.should match("Elapsed time")
+    end
   end
+    
 
   it "does not print the request id to stdout if log_line == false" do
     HerokuRequestId::Middleware.log_line = false
-    output = request_without_rack_runtime
+    output = request
     output.should_not match("heroku-request-id")
     output.should_not match("the_id_string")
     # reset html_comment so that random test order works
@@ -44,14 +48,14 @@ describe HerokuRequestId::Middleware do
   end
 
   it "does not add a comment with the Heroku request id by default" do
-    request_without_rack_runtime
+    request
     last_response.body.should_not match("Heroku request id")
     last_response.body.should_not match("the_id_string")
   end
 
   it "does add a comment with the Heroku request id if html_comment == true" do
     HerokuRequestId::Middleware.html_comment = true
-    request_without_rack_runtime
+    request
     last_response.body.should match("Heroku request id")
     last_response.body.should match("the_id_string")
     # reset html_comment so that random test order works
@@ -59,7 +63,7 @@ describe HerokuRequestId::Middleware do
   end
 
   it "makes no change to response status" do
-    request_without_rack_runtime
+    request
     last_response.should be_ok
   end
 
