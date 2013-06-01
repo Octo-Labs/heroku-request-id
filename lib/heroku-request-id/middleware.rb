@@ -36,7 +36,7 @@ module HerokuRequestId
     end
 
     def call(env)
-      @start = Time.now
+      @env = env
       @request_id = env['HTTP_HEROKU_REQUEST_ID']
       env["HTTP_X_REQUEST_ID"] = @request_id if self.class.x_request_id_replication
       @status, @headers, @response = @app.call(env)
@@ -44,15 +44,25 @@ module HerokuRequestId
     end
 
     def each(&block)
-      @stop = Time.now
-      @elapsed = @stop - @start
+      msg = build_msg
       if self.class.html_comment && @headers["Content-Type"] && @headers["Content-Type"].include?("text/html")
-        block.call("<!-- Heroku request id : #{@request_id} - Elapsed time : #{@elapsed} -->\n")
+        block.call("<!-- #{msg} -->\n")
       end
       if self.class.log_line
-        $stdout.puts("heroku-request-id=#{@request_id} measure=\"rack-request\" elapsed=#{@elapsed}")
+        $stdout.puts(msg)
       end
       @response.each(&block)
+    end
+    
+    def build_msg
+      elapsed = @env['X-Runtime']
+      msg = %[Heroku request id : #{@request_id}]
+      if elapsed && elapsed.strip != ""
+        msg += %[ - Elapsed time (from Rack::Runtime) : #{elapsed}]
+      else
+        msg += %[ - Runtime info not available.  (Use Rack::Runtime)]
+      end
+      msg
     end
 
   end
