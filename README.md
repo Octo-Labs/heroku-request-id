@@ -2,6 +2,9 @@
 
 Simple Rack middleware to log the heroku request id and write it to the end of html requests. Both optionally, of course.
 
+[![Gem Version](https://badge.fury.io/rb/heroku-request-id.png)](http://badge.fury.io/rb/heroku-request-id)
+
+
 ## Installation
 
 Add this line to your application's Gemfile:
