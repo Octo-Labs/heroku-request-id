@@ -3,6 +3,7 @@
 Simple Rack middleware to log the heroku request id and write it to the end of html requests. Both optionally, of course.
 
 [![Gem Version](https://badge.fury.io/rb/heroku-request-id.png)](http://badge.fury.io/rb/heroku-request-id)
+[![Build Status](https://travis-ci.org/Octo-Labs/heroku-request-id.png?branch=master)](https://travis-ci.org/Octo-Labs/heroku-request-id)
 [![Code Climate](https://codeclimate.com/repos/52f470d76956806ddd000fd6/badges/fdf6a55ba332a8033ebb/gpa.png)](https://codeclimate.com/repos/52f470d76956806ddd000fd6/feed)
 [![Coverage Status](https://coveralls.io/repos/Octo-Labs/heroku-request-id/badge.png?branch=master)](https://coveralls.io/r/Octo-Labs/heroku-request-id?branch=master)
 [![Dependency Status](https://gemnasium.com/Octo-Labs/heroku-request-id.png)](https://gemnasium.com/Octo-Labs/heroku-request-id)
